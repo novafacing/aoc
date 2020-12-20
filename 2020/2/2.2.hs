@@ -9,6 +9,7 @@ uncurry4 f ~(a, b, c, d) = f a b c d
 a ^^^ b = a /= b
 
 checkPassword :: Int -> Int -> Char -> String -> Bool
+-- This time we just want to check the two indices
 checkPassword mn mx req pass = (pass !! (mn - 1) == req) ^^^ (pass !! (mx - 1) == req)
 
 decomposeRecord :: String -> (Int, Int, Char, String)
@@ -21,9 +22,7 @@ decomposeRecord record =
     in (mn, mx, req, pass)
 
 main = do
-    -- Read the file and split it by lines into a list
     contents <- fmap lines $ readFile "input"
-    -- Map "read" to the list (note we specify it must be [Int] type
     let report = map decomposeRecord contents
         rptcount = map (uncurry4 checkPassword) report
     putStr $ unlines $ map show (zip report rptcount)
