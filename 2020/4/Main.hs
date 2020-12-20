@@ -11,13 +11,6 @@ createRecord ln =
         record = M.fromList sparts
     in record
 
-getPasses :: M.Map String String -> M.Map String String
-getPasses record =
-    let requirements = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
-        passCount = catMaybes $ L.map (flip M.lookup $ record) requirements
-    in M.fromList $ zip requirements passCount
-    
-
 checkRecord :: M.Map String String -> Bool
 checkRecord record = 
     let requirements = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
@@ -30,6 +23,4 @@ main = do
     let rawRecords = L.filter (/="") contents
         records = L.map createRecord rawRecords
         results = L.map checkRecord records
-        passes = L.map (length . getPasses) records
-        fmtresults = zip3 records passes results
     print $ length $ L.filter (== True) results
