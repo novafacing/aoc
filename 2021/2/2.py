@@ -24,19 +24,17 @@ class Day2:
         )
 
     def part2(self) -> None:
-        a = tuple(
-            accumulate(
-                map(
-                    lambda l: int(l.split(" ")[1])
-                    if "down" in l
-                    else -int(l.split(" ")[1])
-                    if "up" in l
-                    else 0,
-                    self.input_file_contents,
-                ),
-                func=add,
-                initial=0,
-            )
+        a = accumulate(
+            map(
+                lambda l: int(l.split(" ")[1])
+                if "down" in l
+                else -int(l.split(" ")[1])
+                if "up" in l
+                else 0,
+                self.input_file_contents,
+            ),
+            func=add,
+            initial=0,
         )
         f = tuple(
             map(
